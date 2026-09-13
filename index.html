@@ -33,9 +33,8 @@
         <button class="menu-btn" data-target="personajes"><span>PERSONAJES</span></button>
         <button class="menu-btn" data-target="misiones"><span>MISIONES</span></button>
         <button class="menu-btn" data-target="galeria"><span>GALERÍA</span></button>
-        <button class="menu-btn" data-target="videos"><span>VIDEOS</span></button>
-        <button class="menu-btn" data-target="mapa"><span>MAPA</span></button>
       </nav>
+      <button class="map-btn" id="open-map">🗺️ MAPA</button>
       <p class="footer-note">© 2026 Juan Edition · Hecho con amor por Ani</p>
     </div>
   </div>
@@ -53,7 +52,7 @@
     <button class="back-btn">← Volver</button>
   </section>
 
-  <!-- PERSONAJES: estilo tarjetas de selección de GTA V -->
+  <!-- PERSONAJES: estilo selección de GTA V -->
   <section id="personajes" class="section hidden">
     <h2 class="select-title">👤 ELIGE PERSONAJE</h2>
     <div class="char-select">
@@ -97,36 +96,51 @@
     <button class="back-btn">← Volver</button>
   </section>
 
+  <!-- GALERÍA: fotos + videos juntos -->
   <section id="galeria" class="section hidden">
     <h2>🖼️ Galería</h2>
+    <p class="galeria-intro">Fotos y videos de nuestra historia:</p>
     <div class="gallery">
       <div class="gallery-item" style="background: linear-gradient(135deg,#ff6b6b,#feca57)">❤️</div>
       <div class="gallery-item" style="background: linear-gradient(135deg,#48dbfb,#0abde3)">🎮</div>
       <div class="gallery-item" style="background: linear-gradient(135deg,#feca57,#ff9f43)">🏙️</div>
       <div class="gallery-item" style="background: linear-gradient(135deg,#1dd1a1,#10ac84)">💚</div>
+      <div class="gallery-item video" data-video="https://www.w3schools.com/html/mov_bbb.mp4">
+        <div class="video-play">▶</div>
+        Video 1
+      </div>
+      <div class="gallery-item video" data-video="https://www.w3schools.com/html/mov_bbb.mp4">
+        <div class="video-play">▶</div>
+        Video 2
+      </div>
     </div>
     <button class="back-btn">← Volver</button>
   </section>
 
-  <section id="videos" class="section hidden">
-    <h2>🎬 Videos</h2>
-    <p>Próximamente: trailer oficial de GTA: Juan Edition.</p>
-    <button class="back-btn">← Volver</button>
-  </section>
-
-  <section id="mapa" class="section hidden">
-    <h2>🗺️ Mapa de Los Santos</h2>
-    <p class="mapa-intro">Los lugares más importantes de nuestra historia:</p>
-    <div class="map-container">
-      <div class="map-point" style="top:20%; left:30%;" data-name="Budapest">📍</div>
-      <div class="map-point" style="top:35%; left:60%;" data-name="Costa azul (Game over)">📍</div>
-      <div class="map-point" style="top:50%; left:25%;" data-name="Mi casa">📍</div>
-      <div class="map-point" style="top:65%; left:55%;" data-name="Super 900">📍</div>
-      <div class="map-point" style="top:80%; left:40%;" data-name="Marrufo (hace unos meses)">📍</div>
-      <div class="map-label" id="map-label"></div>
+  <!-- MAPA: pantalla completa aparte -->
+  <div id="mapa-overlay" class="hidden">
+    <div class="mapa-full">
+      <h2>🗺️ Mapa de Los Santos</h2>
+      <p class="mapa-intro">Los lugares más importantes de nuestra historia:</p>
+      <div class="map-container">
+        <div class="map-point" style="top:20%; left:30%;" data-name="Budapest">📍</div>
+        <div class="map-point" style="top:35%; left:60%;" data-name="Costa azul (Game over)">📍</div>
+        <div class="map-point" style="top:50%; left:25%;" data-name="Mi casa">📍</div>
+        <div class="map-point" style="top:65%; left:55%;" data-name="Super 900">📍</div>
+        <div class="map-point" style="top:80%; left:40%;" data-name="Marrufo (hace unos meses)">📍</div>
+        <div class="map-label" id="map-label"></div>
+      </div>
+      <button class="back-btn" id="close-map">← Cerrar mapa</button>
     </div>
-    <button class="back-btn">← Volver</button>
-  </section>
+  </div>
+
+  <!-- Reproductor de video -->
+  <div id="video-player" class="hidden">
+    <div class="video-box">
+      <video id="video-element" controls></video>
+      <button class="back-btn" id="close-video">← Cerrar</button>
+    </div>
+  </div>
 
   <div id="mission-complete" class="hidden">
     <div class="mission-box">

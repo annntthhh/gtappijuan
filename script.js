@@ -81,11 +81,4 @@ document.querySelectorAll('.menu-btn').forEach(btn => {
   btn.addEventListener('mouseenter', playHover);
   btn.addEventListener('click', () => {
     playSelect();
-    const target = btn.getAttribute('data-target');
-    document.getElementById('main-menu').classList.add('hidden');
-    document.getElementById(target).classList.remove('hidden');
-    window.scrollTo(0, 0);
-  });
-});
-
-document.querySelectorAll('.back-btn').forEach(btn => {
+    const target = btn¡Entendido, Aneth! 🔥 Hago los cambios que pediste: videos dentro de galería, mapa fuera del menú como botón aparte, y fondo que cambia cada 10 seg con transición suave. Aquí van los **3 archivos completos**:

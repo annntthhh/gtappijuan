@@ -34,6 +34,7 @@
         <button class="menu-btn" data-target="misiones"><span>MISIONES</span></button>
         <button class="menu-btn" data-target="galeria"><span>GALERÍA</span></button>
         <button class="menu-btn" data-target="videos"><span>VIDEOS</span></button>
+        <button class="menu-btn" data-target="mapa"><span>MAPA</span></button>
       </nav>
       <p class="footer-note">© 2026 Juan Edition · Hecho con amor por Ani</p>
     </div>
@@ -88,6 +89,29 @@
     <p>Próximamente: trailer oficial de GTA: Juan Edition.</p>
     <button class="back-btn">← Volver</button>
   </section>
+
+  <section id="mapa" class="section hidden">
+    <h2>🗺️ Mapa de Los Santos</h2>
+    <p class="mapa-intro">Los lugares más importantes de nuestra historia:</p>
+    <div class="map-container">
+      <div class="map-point" style="top:20%; left:30%;" data-name="Budapest">📍</div>
+      <div class="map-point" style="top:35%; left:60%;" data-name="Costa azul (Game over)">📍</div>
+      <div class="map-point" style="top:50%; left:25%;" data-name="Mi casa">📍</div>
+      <div class="map-point" style="top:65%; left:55%;" data-name="Super 900">📍</div>
+      <div class="map-point" style="top:80%; left:40%;" data-name="Marrufo (hace unos meses)">📍</div>
+      <div class="map-label" id="map-label"></div>
+    </div>
+    <button class="back-btn">← Volver</button>
+  </section>
+
+  <!-- Pantalla de misión completada -->
+  <div id="mission-complete" class="hidden">
+    <div class="mission-box">
+      <h2>MISIÓN COMPLETADA</h2>
+      <p id="mission-text">¡Bien hecho!</p>
+      <button id="mission-close">CONTINUAR</button>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

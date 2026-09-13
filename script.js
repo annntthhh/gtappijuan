@@ -1,4 +1,4 @@
-// Papantalla de carga
+// Pantalla de carga
 let progress = 0;
 const fill = document.getElementById('loading-fill');
 const loadingText = document.getElementById('loading-text');
@@ -19,7 +19,7 @@ function showMenu() {
   document.getElementById('main-menu').classList.remove('hidden');
 }
 
-// Navegación entre secciones
+// Navegación
 document.querySelectorAll('.menu-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const target = btn.getAttribute('data-target');
@@ -29,7 +29,6 @@ document.querySelectorAll('.menu-btn').forEach(btn => {
   });
 });
 
-// Botones de volver
 document.querySelectorAll('.back-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));

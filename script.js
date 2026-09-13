@@ -19,6 +19,30 @@ function showMenu() {
   document.getElementById('main-menu').classList.remove('hidden');
 }
 
+// ===== FONDO QUE CAMBIA CADA 10s =====
+const backgrounds = [
+  'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1600&q=80',
+  'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1600&q=80',
+  'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1600&q=80',
+  'https://images.unsplash.com/photo-1444723121867-7a241cacace9?w=1600&q=80',
+  'https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=1600&q=80'
+];
+
+const menuBg = document.querySelector('.menu-bg');
+let bgIndex = 0;
+
+function changeBackground() {
+  bgIndex = (bgIndex + 1) % backgrounds.length;
+  // Fundido suave: primero baja la opacidad, cambia la imagen, sube de nuevo
+  menuBg.style.opacity = '0';
+  setTimeout(() => {
+    menuBg.style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.85)), url('${backgrounds[bgIndex]}')`;
+    menuBg.style.opacity = '1';
+  }, 2000); // 2s de fundido
+}
+
+setInterval(changeBackground, 10000); // cada 10 segundos
+
 // ===== SONIDOS =====
 let audioCtx = null;
 
@@ -65,58 +89,3 @@ document.querySelectorAll('.menu-btn').forEach(btn => {
 });
 
 document.querySelectorAll('.back-btn').forEach(btn => {
-  btn.addEventListener('mouseenter', playHover);
-  btn.addEventListener('click', () => {
-    playSelect();
-    document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
-    document.getElementById('main-menu').classList.remove('hidden');
-  });
-});
-
-// ===== MISIÓN COMPLETADA =====
-function showMissionComplete(text) {
-  document.getElementById('mission-text').textContent = text;
-  document.getElementById('mission-complete').classList.remove('hidden');
-}
-
-document.getElementById('mission-close').addEventListener('click', () => {
-  playSelect();
-  document.getElementById('mission-complete').classList.add('hidden');
-});
-
-// ===== MAPA =====
-const mapPoints = document.querySelectorAll('.map-point');
-const mapLabel = document.getElementById('map-label');
-
-mapPoints.forEach(point => {
-  point.addEventListener('click', () => {
-    playSelect();
-    const name = point.getAttribute('data-name');
-    mapLabel.textContent = '📍 ' + name;
-    mapLabel.classList.add('show');
-    showMissionComplete('Has visitado: ' + name);
-  });
-});
-
-document.querySelector('.map-container').addEventListener('click', (e) => {
-  if (!e.target.classList.contains('map-point')) {
-    mapLabel.classList.remove('show');
-  }
-});
-
-// Easter egg: código Konami 🕹️
-const konami = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-let konamiIndex = 0;
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === konami[konamiIndex]) {
-    konamiIndex++;
-    if (konamiIndex === konami.length) {
-      alert('🎉 ¡Código Konami activado! GTA: Juan Edition — Modo Dios');
-      document.body.style.background = 'linear-gradient(135deg, #feca57, #e84118)';
-      konamiIndex = 0;
-    }
-  } else {
-    konamiIndex = 0;
-  }
-});

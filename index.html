@@ -40,36 +40,60 @@
     </div>
   </div>
 
+  <!-- HISTORIA: estilo HUD de GTA V -->
   <section id="historia" class="section hidden">
-    <h2>📖 Historia</h2>
-    <p>Bienvenido a Los Santos, la ciudad donde Juan es el protagonista. Una historia de lealtad, amor y grandes aventuras.</p>
+    <div class="hud-corner hud-tl"></div>
+    <div class="hud-corner hud-tr"></div>
+    <div class="hud-corner hud-bl"></div>
+    <div class="hud-corner hud-br"></div>
+    <h2 class="hud-title">📖 HISTORIA</h2>
+    <div class="hud-window">
+      <p>Bienvenido a Los Santos, la ciudad donde Juan es el protagonista. Una historia de lealtad, amor y grandes aventuras.</p>
+    </div>
     <button class="back-btn">← Volver</button>
   </section>
 
+  <!-- PERSONAJES: estilo tarjetas de selección de GTA V -->
   <section id="personajes" class="section hidden">
-    <h2>👤 Personajes</h2>
-    <div class="cards">
-      <div class="card">
-        <div class="avatar" id="avatar-juan">👑</div>
-        <h3>Juan</h3>
-        <p>El protagonista. El más fuerte y el más leal.</p>
+    <h2 class="select-title">👤 ELIGE PERSONAJE</h2>
+    <div class="char-select">
+      <div class="char-card char-juan">
+        <div class="char-avatar">👑</div>
+        <div class="char-info">
+          <h3>JUAN</h3>
+          <p>El protagonista. El más fuerte y el más leal.</p>
+        </div>
       </div>
-      <div class="card">
-        <div class="avatar" id="avatar-aneth">💖</div>
-        <h3>Aneth</h3>
-        <p>La compañera. La que siempre está a su lado.</p>
+      <div class="char-card char-aneth">
+        <div class="char-avatar">💖</div>
+        <div class="char-info">
+          <h3>ANETH</h3>
+          <p>La compañera. La que siempre está a su lado.</p>
+        </div>
       </div>
     </div>
     <button class="back-btn">← Volver</button>
   </section>
 
+  <!-- MISIONES: estilo pantalla de misión de GTA -->
   <section id="misiones" class="section hidden">
-    <h2>🎯 Misiones</h2>
-    <ul class="missions">
-      <li><span class="mission-status done">✔</span> Misión 1: El primer encuentro</li>
-      <li><span class="mission-status">➤</span> Misión 2: La gran aventura</li>
-      <li><span class="mission-status locked">🔒</span> Misión 3: Próximamente...</li>
-    </ul>
+    <div class="mission-screen">
+      <h2 class="mission-title">🎯 MISIONES</h2>
+      <ul class="mission-list">
+        <li class="mission-item done">
+          <span class="mission-icon">✔</span>
+          <div><h3>Misión 1</h3><p>El primer encuentro</p></div>
+        </li>
+        <li class="mission-item current">
+          <span class="mission-icon">➤</span>
+          <div><h3>Misión 2</h3><p>La gran aventura</p></div>
+        </li>
+        <li class="mission-item locked">
+          <span class="mission-icon">🔒</span>
+          <div><h3>Misión 3</h3><p>Próximamente...</p></div>
+        </li>
+      </ul>
+    </div>
     <button class="back-btn">← Volver</button>
   </section>
 
@@ -104,7 +128,6 @@
     <button class="back-btn">← Volver</button>
   </section>
 
-  <!-- Pantalla de misión completada -->
   <div id="mission-complete" class="hidden">
     <div class="mission-box">
       <h2>MISIÓN COMPLETADA</h2>

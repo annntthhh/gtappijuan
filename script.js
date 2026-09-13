@@ -19,8 +19,7 @@ function showMenu() {
   document.getElementById('main-menu').classList.remove('hidden');
 }
 
-// ===== SONIDOS (idea 1) =====
-// Genera sonidos con la Web Audio API (sin archivos externos)
+// ===== SONIDOS =====
 let audioCtx = null;
 
 function playHover() {
@@ -74,7 +73,7 @@ document.querySelectorAll('.back-btn').forEach(btn => {
   });
 });
 
-// ===== MISIÓN COMPLETADA (idea 2) =====
+// ===== MISIÓN COMPLETADA =====
 function showMissionComplete(text) {
   document.getElementById('mission-text').textContent = text;
   document.getElementById('mission-complete').classList.remove('hidden');
@@ -85,7 +84,7 @@ document.getElementById('mission-close').addEventListener('click', () => {
   document.getElementById('mission-complete').classList.add('hidden');
 });
 
-// ===== MAPA (idea 3) =====
+// ===== MAPA =====
 const mapPoints = document.querySelectorAll('.map-point');
 const mapLabel = document.getElementById('map-label');
 
@@ -95,12 +94,10 @@ mapPoints.forEach(point => {
     const name = point.getAttribute('data-name');
     mapLabel.textContent = '📍 ' + name;
     mapLabel.classList.add('show');
-    // Muestra la "misión completada" al visitar un lugar
     showMissionComplete('Has visitado: ' + name);
   });
 });
 
-// Cerrar etiqueta del mapa al tocar fuera
 document.querySelector('.map-container').addEventListener('click', (e) => {
   if (!e.target.classList.contains('map-point')) {
     mapLabel.classList.remove('show');

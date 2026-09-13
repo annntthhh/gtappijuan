@@ -19,9 +19,45 @@ function showMenu() {
   document.getElementById('main-menu').classList.remove('hidden');
 }
 
+// ===== SONIDOS (idea 1) =====
+// Genera sonidos con la Web Audio API (sin archivos externos)
+let audioCtx = null;
+
+function playHover() {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'square';
+    osc.frequency.value = 600;
+    gain.gain.value = 0.05;
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.08);
+  } catch (e) {}
+}
+
+function playSelect() {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'square';
+    osc.frequency.value = 900;
+    gain.gain.value = 0.05;
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.12);
+  } catch (e) {}
+}
+
 // Navegación
 document.querySelectorAll('.menu-btn').forEach(btn => {
+  btn.addEventListener('mouseenter', playHover);
   btn.addEventListener('click', () => {
+    playSelect();
     const target = btn.getAttribute('data-target');
     document.getElementById('main-menu').classList.add('hidden');
     document.getElementById(target).classList.remove('hidden');
@@ -30,10 +66,45 @@ document.querySelectorAll('.menu-btn').forEach(btn => {
 });
 
 document.querySelectorAll('.back-btn').forEach(btn => {
+  btn.addEventListener('mouseenter', playHover);
   btn.addEventListener('click', () => {
+    playSelect();
     document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
     document.getElementById('main-menu').classList.remove('hidden');
   });
+});
+
+// ===== MISIÓN COMPLETADA (idea 2) =====
+function showMissionComplete(text) {
+  document.getElementById('mission-text').textContent = text;
+  document.getElementById('mission-complete').classList.remove('hidden');
+}
+
+document.getElementById('mission-close').addEventListener('click', () => {
+  playSelect();
+  document.getElementById('mission-complete').classList.add('hidden');
+});
+
+// ===== MAPA (idea 3) =====
+const mapPoints = document.querySelectorAll('.map-point');
+const mapLabel = document.getElementById('map-label');
+
+mapPoints.forEach(point => {
+  point.addEventListener('click', () => {
+    playSelect();
+    const name = point.getAttribute('data-name');
+    mapLabel.textContent = '📍 ' + name;
+    mapLabel.classList.add('show');
+    // Muestra la "misión completada" al visitar un lugar
+    showMissionComplete('Has visitado: ' + name);
+  });
+});
+
+// Cerrar etiqueta del mapa al tocar fuera
+document.querySelector('.map-container').addEventListener('click', (e) => {
+  if (!e.target.classList.contains('map-point')) {
+    mapLabel.classList.remove('show');
+  }
 });
 
 // Easter egg: código Konami 🕹️

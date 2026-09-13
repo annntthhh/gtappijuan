@@ -4,35 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GTA: Juan Edition 🎮</title>
+  <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text x='50' y='72' font-size='70' font-family='Arial Black' font-style='italic' font-weight='900' text-anchor='middle' fill='%23feca57'>G</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pricedown&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="main.css">
 </head>
 <body>
 
-  <!-- Pantalla de carga estilo GTA -->
   <div id="loading-screen">
-    <h1 class="title-art">GTA</h1>
-    <p class="subtitle">JUAN EDITION</p>
-    <div class="loading-bar">
-      <div id="loading-fill"></div>
+    <div class="gta-logo">
+      <span class="gta-letter">G</span><span class="gta-letter">T</span><span class="gta-letter">A</span>
     </div>
+    <p class="subtitle">JUAN EDITION</p>
+    <div class="loading-bar"><div id="loading-fill"></div></div>
     <p id="loading-text">Cargando Los Santos...</p>
   </div>
 
-  <!-- Menú principal -->
   <div id="main-menu" class="hidden">
-    <h1 class="title-art big">GTA</h1>
-    <p class="subtitle">JUAN EDITION</p>
-    <nav class="menu">
-      <button class="menu-btn" data-target="historia">HISTORIA</button>
-      <button class="menu-btn" data-target="personajes">PERSONAJES</button>
-      <button class="menu-btn" data-target="misiones">MISIONES</button>
-      <button class="menu-btn" data-target="galeria">GALERÍA</button>
-      <button class="menu-btn" data-target="videos">VIDEOS</button>
-    </nav>
-    <p class="footer-note">© 2026 Juan Edition · Hecho con ❤️ por Aneth</p>
+    <div class="menu-bg"></div>
+    <div class="menu-content">
+      <div class="gta-logo big">
+        <span class="gta-letter">G</span><span class="gta-letter">T</span><span class="gta-letter">A</span>
+      </div>
+      <p class="subtitle">JUAN EDITION</p>
+      <nav class="menu">
+        <button class="menu-btn" data-target="historia"><span>HISTORIA</span></button>
+        <button class="menu-btn" data-target="personajes"><span>PERSONAJES</span></button>
+        <button class="menu-btn" data-target="misiones"><span>MISIONES</span></button>
+        <button class="menu-btn" data-target="galeria"><span>GALERÍA</span></button>
+        <button class="menu-btn" data-target="videos"><span>VIDEOS</span></button>
+      </nav>
+      <p class="footer-note">© 2026 Juan Edition · Hecho con ❤️ por Aneth</p>
+    </div>
   </div>
 
-  <!-- Secciones -->
   <section id="historia" class="section hidden">
     <h2>📖 Historia</h2>
     <p>Bienvenido a Los Santos, la ciudad donde Juan es el protagonista. Una historia de lealtad, amor y grandes aventuras.</p>
@@ -59,9 +65,9 @@
   <section id="misiones" class="section hidden">
     <h2>🎯 Misiones</h2>
     <ul class="missions">
-      <li>✅ Misión 1: El primer encuentro</li>
-      <li>🔄 Misión 2: La gran aventura</li>
-      <li>🔒 Misión 3: Próximamente...</li>
+      <li><span class="mission-status done">✔</span> Misión 1: El primer encuentro</li>
+      <li><span class="mission-status">➤</span> Misión 2: La gran aventura</li>
+      <li><span class="mission-status locked">🔒</span> Misión 3: Próximamente...</li>
     </ul>
     <button class="back-btn">← Volver</button>
   </section>
@@ -85,4 +91,4 @@
 
   <script src="script.js"></script>
 </body>
-  </html>
+</html>

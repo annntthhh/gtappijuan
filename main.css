@@ -272,7 +272,7 @@ body {
 .back-btn:hover { background: #feca57; color: #000; }
 .back-btn:active { transform: scale(0.97); }
 
-/* ===== HISTORIA: estilo HUD de GTA V ===== */
+/* ===== HISTORIA ===== */
 #historia {
   background: linear-gradient(180deg, #0d1b2a, #1b263b);
 }
@@ -315,7 +315,7 @@ body {
   line-height: 1.8;
 }
 
-/* ===== PERSONAJES: estilo selección de GTA V ===== */
+/* ===== PERSONAJES ===== */
 #personajes {
   background: linear-gradient(180deg, #1a1a1a, #2d2d2d);
 }
@@ -382,7 +382,7 @@ body {
   font-size: 0.95rem;
 }
 
-/* ===== MISIONES: estilo pantalla de misión de GTA ===== */
+/* ===== MISIONES ===== */
 #misiones {
   background: linear-gradient(180deg, #101418, #1a1f24);
 }
@@ -445,7 +445,7 @@ body {
   color: #ccc;
 }
 
-/* ===== GALERÍA (fotos + videos) ===== */
+/* ===== GALERÍA ===== */
 .galeria-intro { margin-bottom: 20px; }
 
 .gallery {
@@ -488,7 +488,7 @@ body {
   color: #feca57;
 }
 
-/* ===== MAPA (pantalla completa aparte) ===== */
+/* ===== MAPA ===== */
 #mapa-overlay {
   position: fixed;
   inset: 0;

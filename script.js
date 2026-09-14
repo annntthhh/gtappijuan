@@ -33,15 +33,14 @@ let bgIndex = 0;
 
 function changeBackground() {
   bgIndex = (bgIndex + 1) % backgrounds.length;
-  // Fundido suave: primero baja la opacidad, cambia la imagen, sube de nuevo
   menuBg.style.opacity = '0';
   setTimeout(() => {
     menuBg.style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.85)), url('${backgrounds[bgIndex]}')`;
     menuBg.style.opacity = '1';
-  }, 2000); // 2s de fundido
+  }, 2000);
 }
 
-setInterval(changeBackground, 10000); // cada 10 segundos
+setInterval(changeBackground, 10000);
 
 // ===== SONIDOS =====
 let audioCtx = null;
@@ -76,9 +75,102 @@ function playSelect() {
   } catch (e) {}
 }
 
-// Navegación
+// Navegación del menú
 document.querySelectorAll('.menu-btn').forEach(btn => {
   btn.addEventListener('mouseenter', playHover);
   btn.addEventListener('click', () => {
     playSelect();
-    const target = btn¡Entendido, Aneth! 🔥 Hago los cambios que pediste: videos dentro de galería, mapa fuera del menú como botón aparte, y fondo que cambia cada 10 seg con transición suave. Aquí van los **3 archivos completos**:
+    const target = btn.getAttribute('data-target');
+    document.getElementById('main-menu').classList.add('hidden');
+    document.getElementById(target).classList.remove('hidden');
+    window.scrollTo(0, 0);
+  });
+});
+
+// Botones de volver (incluye cerrar mapa y cerrar video)
+document.querySelectorAll('.back-btn').forEach(btn => {
+  btn.addEventListener('mouseenter', playHover);
+  btn.addEventListener('click', () => {
+    playSelect();
+    document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+    document.getElementById('mapa-overlay').classList.add('hidden');
+    document.getElementById('video-player').classList.add('hidden');
+    document.getElementById('main-menu').classList.remove('hidden');
+  });
+});
+
+// ===== MAPA =====
+document.getElementById('open-map').addEventListener('click', () => {
+  playSelect();
+  document.getElementById('main-menu').classList.add('hidden');
+  document.getElementById('mapa-overlay').classList.remove('hidden');
+});
+
+// Puntos del mapa: mostrar nombre
+document.querySelectorAll('.map-point').forEach(point => {
+  point.addEventListener('mouseenter', () => {
+    const label = document.getElementById('map-label');
+    label.textContent = point.getAttribute('data-name');
+    label.classList.add('show');
+  });
+  point.addEventListener('mouseleave', () => {
+    document.getElementById('map-label').classList.remove('show');
+  });
+  point.addEventListener('click', () => {
+    const label = document.getElementById('map-label');
+    label.textContent = point.getAttribute('data-name');
+    label.classList.add('show');
+    setTimeout(() => label.classList.remove('show'), 2000);
+  });
+});
+
+// ===== GALERÍA: reproducir video =====
+document.querySelectorAll('.gallery-item.video').forEach(item => {
+  item.addEventListener('click', () => {
+    playSelect();
+    const video = document.getElementById('video-element');
+    video.src = item.getAttribute('data-video');
+    document.getElementById('video-player').classList.remove('hidden');
+    video.play();
+  });
+});
+
+document.getElementById('close-video').addEventListener('click', () => {
+  const video = document.getElementById('video-element');
+  video.pause();
+  video.src = '';
+  document.getElementById('video-player').classList.add('hidden');
+});
+
+// ===== MISIÓN COMPLETADA (demo) =====
+const missionClose = document.getElementById('mission-close');
+if (missionClose) {
+  missionClose.addEventListener('click', () => {
+    document.getElementById('mission-complete').classList.add('hidden');
+  });
+}
+
+// ===== EASTER EGG: Código Konami =====
+let konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+let konamiIndex = 0;
+
+document.addEventListener('keydown', (e) => {
+  const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+  if (key === konamiCode[konamiIndex]) {
+    konamiIndex++;
+    if (konamiIndex === konamiCode.length) {
+      konamiIndex = 0;
+      activateKonami();
+    }
+  } else {
+    konamiIndex = 0;
+  }
+});
+
+function activateKonami() {
+  const box = document.getElementById('mission-complete');
+  if (box) {
+    document.getElementById('mission-text').textContent = '¡Easter Egg activado! 🎉 Bien hecho, Ani 💛';
+    box.classList.remove('hidden');
+  }
+}

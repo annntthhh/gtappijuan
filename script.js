@@ -20,6 +20,7 @@ function showMenu() {
   document.getElementById('money-counter').classList.remove('hidden');
   document.getElementById('mini-map').classList.remove('hidden');
   document.getElementById('radio-panel').classList.remove('hidden');
+  drawRoutes();
   showNotification('🎮 Bienvenido a Los Santos', '💛');
 }
 
@@ -73,34 +74,77 @@ function showNotification(message, icon = '🔔') {
 // ===== SONIDOS =====
 let audioCtx = null;
 
+function getAudio() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
 function playHover() {
   try {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
+    const ctx = getAudio();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
     osc.type = 'square';
     osc.frequency.value = 600;
     gain.gain.value = 0.05;
     osc.connect(gain);
-    gain.connect(audioCtx.destination);
+    gain.connect(ctx.destination);
     osc.start();
-    osc.stop(audioCtx.currentTime + 0.08);
+    osc.stop(ctx.currentTime + 0.08);
   } catch (e) {}
 }
 
 function playSelect() {
   try {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
+    const ctx = getAudio();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
     osc.type = 'square';
     osc.frequency.value = 900;
     gain.gain.value = 0.05;
     osc.connect(gain);
-    gain.connect(audioCtx.destination);
+    gain.connect(ctx.destination);
     osc.start();
-    osc.stop(audioCtx.currentTime + 0.12);
+    osc.stop(ctx.currentTime + 0.12);
   } catch (e) {}
+}
+
+// ===== FANFARRIA DE MISIÓN PASADA (victoria épica) =====
+function playMissionPassed() {
+  try {
+    const ctx = getAudio();
+    const notes = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5, 1318.5];
+    const times = [0, 0.15, 0.3, 0.45, 0.7, 0.85, 1.0];
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.value = freq;
+      const start = ctx.currentTime + times[i];
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(0.12, start + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.5);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + 0.55);
+    });
+  } catch (e) {}
+}
+
+// ===== MISIÓN COMPLETADA =====
+function showMissionComplete(message) {
+  document.getElementById('mission-text').textContent = message;
+  document.getElementById('mission-complete').classList.remove('hidden');
+  playMissionPassed();
+  addMoney(200);
+}
+
+const missionClose = document.getElementById('mission-close');
+if (missionClose) {
+  missionClose.addEventListener('click', () => {
+    document.getElementById('mission-complete').classList.add('hidden');
+  });
 }
 
 // ===== RADIO GTA (panel lateral) =====
@@ -143,29 +187,27 @@ radioTune.addEventListener('click', () => {
   playSelect();
   if (radioOn) {
     showNotification('📻 Sintonizando...', '🎛️');
-    // Cambia de "canal": suena una melodía distinta
     stopRadioTune();
     playRadioTune();
   }
 });
 
-// Melodía generada tipo radio (suena si no hay MP3)
 function playRadioTune() {
   const notes = [440, 493, 523, 587, 659, 698, 784, 880];
   let n = 0;
   radioTuneInterval = setInterval(() => {
     try {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
+      const ctx = getAudio();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
       osc.type = 'triangle';
       osc.frequency.value = notes[n % notes.length];
-      gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+      gain.gain.setValueAtTime(0.05, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
       osc.connect(gain);
-      gain.connect(audioCtx.destination);
+      gain.connect(ctx.destination);
       osc.start();
-      osc.stop(audioCtx.currentTime + 0.3);
+      osc.stop(ctx.currentTime + 0.3);
       n++;
     } catch (e) {}
   }, 300);
@@ -199,6 +241,83 @@ document.getElementById('mini-map').addEventListener('click', () => {
   document.getElementById('main-menu').classList.add('hidden');
   document.getElementById('mapa-overlay').classList.remove('hidden');
 });
+
+// ===== RUTAS DIBUJADAS ENTRE LUGARES =====
+const routePoints = [
+  { name: 'Budapest', x: 30, y: 20 },
+  { name: 'Costa azul', x: 60, y: 35 },
+  { name: 'Mi casa', x: 25, y: 50 },
+  { name: 'Super 900', x: 55, y: 65 },
+  { name: 'Marrufo', x: 40, y: 80 }
+];
+
+function drawRoutes() {
+  const svg = document.querySelector('.map-routes');
+  if (!svg) return;
+  svg.innerHTML = '';
+  const ns = 'http://www.w3.org/2000/svg';
+  // Conectar cada lugar con el siguiente (tipo GPS)
+  for (let i = 0; i < routePoints.length - 1; i++) {
+    const a = routePoints[i];
+    const b = routePoints[i + 1];
+    const path = document.createElementNS(ns, 'path');
+    // Curva suave entre los dos puntos
+    const mx = (a.x + b.x) / 2;
+    path.setAttribute('d', `M ${a.x} ${a.y} Q ${mx} ${a.y} ${b.x} ${b.y}`);
+    svg.appendChild(path);
+  }
+  // También conecta Marrufo de vuelta a Budapest (ruta circular)
+  const a = routePoints[routePoints.length - 1];
+  const b = routePoints[0];
+  const path = document.createElementNS(ns, 'path');
+  const mx = (a.x + b.x) / 2;
+  path.setAttribute('d', `M ${a.x} ${a.y} Q ${mx} ${a.y} ${b.x} ${b.y}`);
+  svg.appendChild(path);
+}
+
+// ===== MODO VISTA DE NOCHE (toggle) =====
+// Toca el mapa 2 veces rápido para activar/desactivar la noche
+const mapContainer = document.querySelector('.map-container');
+const mapNight = document.querySelector('.map-night');
+let lastTap = 0;
+
+if (mapContainer) {
+  mapContainer.addEventListener('click', (e) => {
+    // Ignorar si tocó un punto del mapa
+    if (e.target.classList.contains('map-point')) return;
+    const now = Date.now();
+    if (now - lastTap < 400) {
+      mapNight.classList.toggle('off');
+      showNotification(mapNight.classList.contains('off') ? '🌙 Día' : '🌃 Vista de noche', '🌙');
+    }
+    lastTap = now;
+  });
+}
+
+// ===== MAPA: puntos y detalle de Game over =====
+const mapLabel = document.getElementById('map-label');
+
+document.querySelectorAll('.map-point').forEach(point => {
+  point.addEventListener('mouseenter', () => {
+    showMapLabel(point);
+  });
+  point.addEventListener('mouseleave', () => {
+    mapLabel.classList.remove('show');
+  });
+  point.addEventListener('click', () => {
+    playSelect();
+    showMapLabel(point);
+    setTimeout(() => mapLabel.classList.remove('show'), 2500);
+  });
+});
+
+function showMapLabel(point) {
+  let text = point.getAttribute('data-name');
+  const sub = point.getAttribute('data-sub');
+  if (sub) text += ' — ' + sub;
+  mapLabel.textContent = text;
+  mapLabel.classList.add('show');
+}
 
 // ===== Navegación del menú =====
 document.querySelectorAll('.menu-btn').forEach(btn => {
@@ -256,23 +375,8 @@ document.querySelectorAll('.char-card').forEach(card => {
   });
 });
 
-// ===== MAPA =====
-// Puntos del mapa: mostrar nombre
-document.querySelectorAll('.map-point').forEach(point => {
-  point.addEventListener('mouseenter', () => {
-    const label = document.getElementById('map-label');
-    label.textContent = point.getAttribute('data-name');
-    label.classList.add('show');
-  });
-  point.addEventListener('mouseleave', () => {
-    document.getElementById('map-label').classList.remove('show');
-  });
-  point.addEventListener('click', () => {
-    const label = document.getElementById('map-label');
-    label.textContent = point.getAttribute('data-name');
-    label.classList.add('show');
-    setTimeout(() => label.classList.remove('show'), 2000);
-  });
+document.getElementById('close-char').addEventListener('click', () => {
+  document.getElementById('char-overlay').classList.add('hidden');
 });
 
 // ===== GALERÍA: reproducir video =====
@@ -291,6 +395,21 @@ document.getElementById('close-video').addEventListener('click', () => {
   video.pause();
   video.src = '';
   document.getElementById('video-player').classList.add('hidden');
+});
+
+// ===== MISIONES: completar al tocar =====
+document.querySelectorAll('.mission-item').forEach(item => {
+  item.addEventListener('click', () => {
+    if (item.classList.contains('locked')) return;
+    if (item.classList.contains('current')) {
+      item.classList.remove('current');
+      item.classList.add('done');
+      item.querySelector('.mission-icon').textContent = '✔';
+      showMissionComplete('¡Misión completada! +200 💰');
+    } else if (item.classList.contains('done')) {
+      showNotification('✔ Misión ya completada', '🏆');
+    }
+  });
 });
 
 // ===== MINI-JUEGO DE CARRERAS =====
@@ -343,7 +462,6 @@ function moveObstacle(obs) {
       if (raceScore % 50 === 0) addMoney(100);
       return;
     }
-    // Colisión
     const carRect = raceCar.getBoundingClientRect();
     const obsRect = obs.getBoundingClientRect();
     if (carRect.left < obsRect.right && carRect.right > obsRect.left &&
@@ -362,7 +480,6 @@ function gameOver() {
   addMoney(raceScore / 10);
 }
 
-// Mover el carro con el dedo o el mouse
 raceArea.addEventListener('touchmove', (e) => {
   e.preventDefault();
   const rect = raceArea.getBoundingClientRect();
@@ -381,20 +498,11 @@ function moveCar(percent) {
   raceCar.style.left = percent + '%';
 }
 
-// Botón reiniciar
 const raceRestart = document.getElementById('race-restart');
 if (raceRestart) {
   raceRestart.addEventListener('click', () => {
     playSelect();
     startRace();
-  });
-}
-
-// ===== MISIÓN COMPLETADA (demo) =====
-const missionClose = document.getElementById('mission-close');
-if (missionClose) {
-  missionClose.addEventListener('click', () => {
-    document.getElementById('mission-complete').classList.add('hidden');
   });
 }
 
@@ -416,10 +524,5 @@ document.addEventListener('keydown', (e) => {
 });
 
 function activateKonami() {
-  const box = document.getElementById('mission-complete');
-  if (box) {
-    document.getElementById('mission-text').textContent = '¡Easter Egg activado! 🎉 Bien hecho, Ani 💛';
-    box.classList.remove('hidden');
-    addMoney(500);
-  }
+  showMissionComplete('¡Easter Egg activado! 🎉 Bien hecho, Ani 💛');
 }

@@ -21,6 +21,18 @@
     <p id="loading-text">Cargando Los Santos...</p>
   </div>
 
+  <!-- CONTADOR DE DINERO -->
+  <div id="money-counter" class="hidden">
+    <span class="money-icon">💰</span>
+    <span id="money-amount">$0</span>
+  </div>
+
+  <!-- NOTIFICACIÓN ESTILO GTA -->
+  <div id="gta-notification" class="hidden">
+    <span id="notif-icon">🔔</span>
+    <span id="notif-text">Mensaje</span>
+  </div>
+
   <div id="main-menu" class="hidden">
     <div class="menu-bg"></div>
     <div class="menu-content">
@@ -33,8 +45,10 @@
         <button class="menu-btn" data-target="personajes"><span>PERSONAJES</span></button>
         <button class="menu-btn" data-target="misiones"><span>MISIONES</span></button>
         <button class="menu-btn" data-target="galeria"><span>GALERÍA</span></button>
+        <button class="menu-btn" data-target="carreras"><span>🏁 CARRERAS</span></button>
       </nav>
       <button class="map-btn" id="open-map">🗺️ MAPA</button>
+      <button class="radio-btn" id="radio-btn">📻 RADIO GTA</button>
       <p class="footer-note">© 2026 Juan Edition · Hecho con amor por Ani</p>
     </div>
   </div>
@@ -118,6 +132,18 @@
         Video 2
       </div>
     </div>
+    <button class="back-btn">← Volver</button>
+  </section>
+
+  <!-- MINI-JUEGO DE CARRERAS -->
+  <section id="carreras" class="section hidden">
+    <h2>🏁 CARRERAS</h2>
+    <p class="galeria-intro">Esquiva los obstáculos y llega lo más lejos posible.</p>
+    <div class="race-area">
+      <div class="race-car" id="race-car">🚗</div>
+    </div>
+    <p class="race-score">Puntos: <span id="race-score">0</span></p>
+    <button class="back-btn" id="race-restart">↻ Reiniciar</button>
     <button class="back-btn">← Volver</button>
   </section>
 

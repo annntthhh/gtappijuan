@@ -25,6 +25,7 @@
   <div id="money-counter" class="hidden">
     <span class="money-icon">💰</span>
     <span id="money-amount">$0</span>
+    <span id="player-rank" class="rank-badge">NOVATO</span>
   </div>
 
   <!-- NOTIFICACIÓN ESTILO GTA -->
@@ -58,8 +59,15 @@
         <button class="menu-btn" data-target="galeria"><span>GALERÍA</span></button>
         <button class="menu-btn" data-target="carreras"><span>🏁 CARRERAS</span></button>
       </nav>
-      <button class="rotate-btn" id="rotate-btn">🔄 GIRAR</button>
+      <div class="menu-actions">
+        <button class="rotate-btn" id="rotate-btn">🔄 GIRAR</button>
+        <button class="rotate-btn" id="pause-btn">⏸ PAUSA</button>
+      </div>
       <p class="footer-note">© 2026 Juan Edition · Hecho con amor por Ani</p>
+    </div>
+    <div class="dialog-bubbles">
+      <div class="bubble bubble-aneth">💬 te amo mucho ppi</div>
+      <div class="bubble bubble-juan">💛 yo mas mami, hoy mas que ayer y mañana mas que hoy</div>
     </div>
   </div>
 
@@ -217,7 +225,23 @@
         <p id="char-personality"></p>
         <p id="char-physical"></p>
       </div>
+      <div class="char-stats">
+        <div class="stat"><span>❤️ Amor</span><div class="stat-bar"><div class="stat-fill" data-val="100"></div></div></div>
+        <div class="stat"><span>🤝 Lealtad</span><div class="stat-bar"><div class="stat-fill" data-val="95"></div></div></div>
+        <div class="stat"><span>😄 Humor</span><div class="stat-bar"><div class="stat-fill" data-val="90"></div></div></div>
+        <div class="stat"><span>🧘 Paciencia</span><div class="stat-bar"><div class="stat-fill" data-val="60"></div></div></div>
+      </div>
       <button class="back-btn" id="close-char">← Cerrar</button>
+    </div>
+  </div>
+
+  <!-- PANTALLA DE PAUSA -->
+  <div id="pause-overlay" class="hidden">
+    <div class="pause-box">
+      <h2>⏸ PAUSA</h2>
+      <button class="pause-btn" id="pause-resume">▶ CONTINUAR</button>
+      <button class="pause-btn" id="pause-restart">↻ REINICIAR</button>
+      <button class="pause-btn" id="pause-menu">🏠 MENÚ</button>
     </div>
   </div>
 

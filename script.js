@@ -87,7 +87,7 @@ document.querySelectorAll('.menu-btn').forEach(btn => {
   });
 });
 
-// Botones de volver (incluye cerrar mapa y cerrar video)
+// Botones de volver (incluye cerrar mapa, video y personaje)
 document.querySelectorAll('.back-btn').forEach(btn => {
   btn.addEventListener('mouseenter', playHover);
   btn.addEventListener('click', () => {
@@ -95,7 +95,37 @@ document.querySelectorAll('.back-btn').forEach(btn => {
     document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
     document.getElementById('mapa-overlay').classList.add('hidden');
     document.getElementById('video-player').classList.add('hidden');
+    document.getElementById('char-overlay').classList.add('hidden');
     document.getElementById('main-menu').classList.remove('hidden');
+  });
+});
+
+// ===== VENTANA DE PERSONAJE =====
+const characters = {
+  juan: {
+    name: 'JUAN',
+    photo: 'foto-juan.jpg',
+    personality: 'Amoroso, fantástico, maravilloso, chill, paciente, celoso, detallista.',
+    physical: 'Chico de aprox 1,70, medio blanco quemado por el sol. Pelo castaño no tan oscuro y liso, ojos color marrón osito, lunar en el labio + otros cerca de la nariz y boca que hacen un cuadrado, QK en la ceja, labios prominentes, cuerpo delicioso.'
+  },
+  aneth: {
+    name: 'ANETH',
+    photo: 'foto-aneth.jpg',
+    personality: 'Enojona, risueña, celosa, detallista, amorosa, poca paciencia.',
+    physical: 'Chica de 1.50, blanquita, pelo castaño oscuro rizado.'
+  }
+};
+
+document.querySelectorAll('.char-card').forEach(card => {
+  card.addEventListener('click', () => {
+    playSelect();
+    const key = card.getAttribute('data-char');
+    const data = characters[key];
+    document.getElementById('char-name').textContent = data.name;
+    document.getElementById('char-photo-img').src = data.photo;
+    document.getElementById('char-personality').textContent = 'Personalidad: ' + data.personality;
+    document.getElementById('char-physical').textContent = 'Físico: ' + data.physical;
+    document.getElementById('char-overlay').classList.remove('hidden');
   });
 });
 

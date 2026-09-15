@@ -135,6 +135,47 @@ body {
 
 #notif-icon { font-size: 1.3rem; }
 
+/* ===== MINI-MAPA ESTILO GTA ===== */
+#mini-map {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  z-index: 90;
+  width: 90px;
+  height: 90px;
+  border: 3px solid #feca57;
+  border-radius: 8px;
+  background:
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=400&q=80') center/cover no-repeat;
+  box-shadow: 0 0 15px rgba(254, 202, 87, 0.4);
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mini-map-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.mini-point {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #e84118;
+  border: 1px solid #feca57;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: miniPulse 2s infinite;
+}
+
+@keyframes miniPulse {
+  0%, 100% { box-shadow: 0 0 3px rgba(232,65,24,0.8); }
+  50% { box-shadow: 0 0 8px rgba(232,65,24,1); }
+}
+
 /* ===== MENÚ ===== */
 #main-menu {
   min-height: 100vh;
@@ -228,53 +269,27 @@ body {
 .menu-btn:hover { color: #000; border-color: #e84118; }
 .menu-btn:active { transform: scale(0.97); }
 
-/* Botón MAPA fuera del menú */
-.map-btn {
-  background: rgba(0, 0, 0, 0.7);
-  border: 2px solid #1dd1a1;
-  color: #1dd1a1;
-  font-family: inherit;
-  font-size: 1.1rem;
-  letter-spacing: 2px;
-  padding: 12px 30px;
-  cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 0 10px rgba(29, 209, 161, 0.4);
-  -webkit-tap-highlight-color: transparent;
-}
-
-.map-btn:hover {
-  background: #1dd1a1;
-  color: #000;
-}
-.map-btn:active { transform: scale(0.97); }
-
-/* Botón RADIO GTA */
-.radio-btn {
+/* Botón GIRAR PANTALLA */
+.rotate-btn {
   background: rgba(0, 0, 0, 0.7);
   border: 2px solid #feca57;
   color: #feca57;
   font-family: inherit;
-  font-size: 1.1rem;
+  font-size: 1rem;
   letter-spacing: 2px;
   padding: 12px 30px;
-  margin-top: 15px;
+  margin-top: 20px;
   cursor: pointer;
   transition: all 0.3s;
   box-shadow: 0 0 10px rgba(254, 202, 87, 0.4);
   -webkit-tap-highlight-color: transparent;
 }
 
-.radio-btn:hover {
+.rotate-btn:hover {
   background: #feca57;
   color: #000;
 }
-.radio-btn.on {
-  background: #e84118;
-  border-color: #e84118;
-  color: #fff;
-}
-.radio-btn:active { transform: scale(0.97); }
+.rotate-btn:active { transform: scale(0.97); }
 
 .footer-note {
   font-family: Arial, sans-serif;
@@ -285,6 +300,68 @@ body {
   text-shadow: 1px 1px 0 #000;
   text-align: center;
   padding: 0 10px;
+}
+
+/* ===== RADIO GTA (panel lateral derecho) ===== */
+#radio-panel {
+  position: fixed;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+}
+
+.radio-box {
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid #feca57;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(254, 202, 87, 0.4);
+}
+
+.radio-screen {
+  background: #0a0a0a;
+  border: 2px solid #333;
+  border-radius: 5px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #feca57;
+  letter-spacing: 1px;
+  min-width: 90px;
+  text-shadow: 0 0 5px rgba(254, 202, 87, 0.6);
+}
+
+.radio-controls {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.radio-controls button {
+  background: #1a1a1a;
+  border: 2px solid #feca57;
+  color: #feca57;
+  font-size: 1.1rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.radio-controls button:hover {
+  background: #feca57;
+  color: #000;
+}
+
+.radio-controls button.on {
+  background: #e84118;
+  border-color: #e84118;
+  color: #fff;
 }
 
 /* ===== SECCIONES BASE ===== */
@@ -849,6 +926,23 @@ body {
 
 #mission-close:hover { background: #1dd1a1; color: #000; }
 
+/* ===== MODO HORIZONTAL (LANDSCAPE) ===== */
+html.landscape body {
+  transform: rotate(90deg);
+  transform-origin: left top;
+  width: 100vh;
+  height: 100vw;
+  position: fixed;
+  top: 0;
+  left: 100vw;
+  overflow-x: hidden;
+}
+
+html.landscape #main-menu,
+html.landscape .section {
+  min-height: 100vh;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 480px) {
   .gta-letter { font-size: 3.5rem; }
@@ -869,4 +963,7 @@ body {
   .hud-title { font-size: 1.8rem; }
   .race-area { height: 360px; }
   .race-car { font-size: 2rem; }
+  #mini-map { width: 70px; height: 70px; }
+  .radio-screen { font-size: 0.65rem; min-width: 70px; }
+  .radio-controls button { width: 34px; height: 34px; font-size: 0.9rem; }
 }

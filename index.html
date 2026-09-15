@@ -52,11 +52,11 @@
     <button class="back-btn">← Volver</button>
   </section>
 
-  <!-- PERSONAJES (con fotos pixeladas) -->
+  <!-- PERSONAJES -->
   <section id="personajes" class="section hidden">
     <h2 class="select-title">👤 ELIGE PERSONAJE</h2>
     <div class="char-select">
-      <div class="char-card char-juan">
+      <div class="char-card char-juan" data-char="juan">
         <div class="char-avatar">
           <img src="foto-juan.jpg" alt="Juan">
         </div>
@@ -65,7 +65,7 @@
           <p>El protagonista. El más fuerte y el más leal.</p>
         </div>
       </div>
-      <div class="char-card char-aneth">
+      <div class="char-card char-aneth" data-char="aneth">
         <div class="char-avatar">
           <img src="foto-aneth.jpg" alt="Aneth">
         </div>
@@ -100,7 +100,7 @@
     <button class="back-btn">← Volver</button>
   </section>
 
-  <!-- GALERÍA (fotos + videos) -->
+  <!-- GALERÍA -->
   <section id="galeria" class="section hidden">
     <h2>🖼️ Galería</h2>
     <p class="galeria-intro">Fotos y videos de nuestra historia:</p>
@@ -121,7 +121,7 @@
     <button class="back-btn">← Volver</button>
   </section>
 
-  <!-- MAPA (pantalla completa aparte) -->
+  <!-- MAPA -->
   <div id="mapa-overlay" class="hidden">
     <div class="mapa-full">
       <h2>🗺️ Mapa de Los Santos</h2>
@@ -138,7 +138,7 @@
     </div>
   </div>
 
-  <!-- Reproductor de video -->
+  <!-- REPRODUCTOR DE VIDEO -->
   <div id="video-player" class="hidden">
     <div class="video-box">
       <video id="video-element" controls></video>
@@ -146,12 +146,27 @@
     </div>
   </div>
 
-  <!-- Misión completada -->
+  <!-- MISIÓN COMPLETADA -->
   <div id="mission-complete" class="hidden">
     <div class="mission-box">
       <h2>MISIÓN COMPLETADA</h2>
       <p id="mission-text">¡Bien hecho!</p>
       <button id="mission-close">CONTINUAR</button>
+    </div>
+  </div>
+
+  <!-- VENTANA DE PERSONAJE -->
+  <div id="char-overlay" class="hidden">
+    <div class="char-box">
+      <h2 id="char-name">JUAN</h2>
+      <div class="char-photo">
+        <img id="char-photo-img" src="" alt="Personaje">
+      </div>
+      <div class="char-desc">
+        <p id="char-personality"></p>
+        <p id="char-physical"></p>
+      </div>
+      <button class="back-btn" id="close-char">← Cerrar</button>
     </div>
   </div>
 

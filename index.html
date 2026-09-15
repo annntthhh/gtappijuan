@@ -36,11 +36,11 @@
   <!-- MINI-MAPA ESTILO GTA (abajo a la derecha) -->
   <div id="mini-map" class="hidden">
     <div class="mini-map-inner">
-      <div class="mini-point" style="top:20%; left:30%;" data-name="Budapest"></div>
-      <div class="mini-point" style="top:35%; left:60%;" data-name="Costa azul (Game over)"></div>
-      <div class="mini-point" style="top:50%; left:25%;" data-name="Mi casa"></div>
-      <div class="mini-point" style="top:65%; left:55%;" data-name="Super 900"></div>
-      <div class="mini-point" style="top:80%; left:40%;" data-name="Marrufo (hace unos meses)"></div>
+      <div class="mini-point" style="top:20%; left:30%;">🍦</div>
+      <div class="mini-point" style="top:35%; left:60%;">🛍️</div>
+      <div class="mini-point" style="top:50%; left:25%;">❤️</div>
+      <div class="mini-point" style="top:65%; left:55%;">🛒</div>
+      <div class="mini-point" style="top:80%; left:40%;">🥕</div>
     </div>
   </div>
 
@@ -120,15 +120,15 @@
     <div class="mission-screen">
       <h2 class="mission-title">🎯 MISIONES</h2>
       <ul class="mission-list">
-        <li class="mission-item done">
+        <li class="mission-item done" data-mission>
           <span class="mission-icon">✔</span>
           <div><h3>Misión 1</h3><p>El primer encuentro</p></div>
         </li>
-        <li class="mission-item current">
+        <li class="mission-item current" data-mission>
           <span class="mission-icon">➤</span>
           <div><h3>Misión 2</h3><p>La gran aventura</p></div>
         </li>
-        <li class="mission-item locked">
+        <li class="mission-item locked" data-mission>
           <span class="mission-icon">🔒</span>
           <div><h3>Misión 3</h3><p>Próximamente...</p></div>
         </li>
@@ -176,11 +176,13 @@
       <h2>🗺️ Mapa de Los Santos</h2>
       <p class="mapa-intro">Los lugares más importantes de nuestra historia:</p>
       <div class="map-container">
-        <div class="map-point" style="top:20%; left:30%;" data-name="Budapest">📍</div>
-        <div class="map-point" style="top:35%; left:60%;" data-name="Costa azul (Game over)">📍</div>
-        <div class="map-point" style="top:50%; left:25%;" data-name="Mi casa">📍</div>
-        <div class="map-point" style="top:65%; left:55%;" data-name="Super 900">📍</div>
-        <div class="map-point" style="top:80%; left:40%;" data-name="Marrufo (hace unos meses)">📍</div>
+        <div class="map-point" style="top:20%; left:30%;" data-name="Budapest" data-icon="🍦">🍦</div>
+        <div class="map-point" style="top:35%; left:60%;" data-name="Costa azul" data-icon="🛍️" data-sub="Game over · 🎮 consolas">🛍️</div>
+        <div class="map-point" style="top:50%; left:25%;" data-name="Mi casa" data-icon="❤️">❤️</div>
+        <div class="map-point" style="top:65%; left:55%;" data-name="Super 900" data-icon="🛒">🛒</div>
+        <div class="map-point" style="top:80%; left:40%;" data-name="Marrufo" data-icon="🥕">🥕</div>
+        <svg class="map-routes" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+        <div class="map-night"></div>
         <div class="map-label" id="map-label"></div>
       </div>
       <button class="back-btn" id="close-map">← Cerrar mapa</button>

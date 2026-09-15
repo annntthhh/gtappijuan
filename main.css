@@ -85,6 +85,56 @@ body {
   letter-spacing: 2px;
 }
 
+/* ===== CONTADOR DE DINERO ===== */
+#money-counter {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 90;
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid #feca57;
+  border-radius: 6px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.3rem;
+  color: #feca57;
+  text-shadow: 1px 1px 0 #000;
+  box-shadow: 0 0 12px rgba(254, 202, 87, 0.4);
+}
+
+.money-icon { font-size: 1.2rem; }
+
+/* ===== NOTIFICACIÓN ESTILO GTA ===== */
+#gta-notification {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 95;
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid #feca57;
+  border-left: 6px solid #e84118;
+  border-radius: 4px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 0.9rem;
+  color: #fff;
+  max-width: 260px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  animation: notifSlide 0.3s ease-out;
+}
+
+@keyframes notifSlide {
+  from { transform: translateX(120%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+#notif-icon { font-size: 1.3rem; }
+
 /* ===== MENÚ ===== */
 #main-menu {
   min-height: 100vh;
@@ -198,6 +248,33 @@ body {
   color: #000;
 }
 .map-btn:active { transform: scale(0.97); }
+
+/* Botón RADIO GTA */
+.radio-btn {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #feca57;
+  color: #feca57;
+  font-family: inherit;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  padding: 12px 30px;
+  margin-top: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 0 10px rgba(254, 202, 87, 0.4);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.radio-btn:hover {
+  background: #feca57;
+  color: #000;
+}
+.radio-btn.on {
+  background: #e84118;
+  border-color: #e84118;
+  color: #fff;
+}
+.radio-btn:active { transform: scale(0.97); }
 
 .footer-note {
   font-family: Arial, sans-serif;
@@ -565,6 +642,55 @@ body {
   color: #feca57;
 }
 
+/* ===== MINI-JUEGO DE CARRERAS ===== */
+#carreras {
+  background: linear-gradient(180deg, #0d1b2a, #1b263b);
+}
+
+.race-area {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  height: 420px;
+  margin: 0 auto 15px;
+  background: linear-gradient(180deg, #2d3436, #111);
+  border: 3px solid #feca57;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.race-car {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.5rem;
+  z-index: 5;
+  transition: left 0.05s;
+  filter: drop-shadow(0 0 5px rgba(254,202,87,0.6));
+}
+
+.race-obstacle {
+  position: absolute;
+  top: -40px;
+  width: 40px;
+  height: 40px;
+  background: #e84118;
+  border: 2px solid #feca57;
+  border-radius: 6px;
+  z-index: 4;
+}
+
+.race-score {
+  font-family: 'Pricedown', Arial, sans-serif;
+  font-size: 1.6rem;
+  color: #feca57;
+  text-align: center;
+  margin-bottom: 10px;
+  z-index: 1;
+}
+
 /* ===== MAPA ===== */
 #mapa-overlay {
   position: fixed;
@@ -741,4 +867,6 @@ body {
   .footer-note { font-size: 0.7rem; }
   .hud-corner { width: 25px; height: 25px; }
   .hud-title { font-size: 1.8rem; }
+  .race-area { height: 360px; }
+  .race-car { font-size: 2rem; }
 }

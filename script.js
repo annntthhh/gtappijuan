@@ -50,11 +50,25 @@ setInterval(changeBackground, 10000);
 // ===== CONTADOR DE DINERO =====
 let money = 0;
 const moneyAmount = document.getElementById('money-amount');
+const playerRank = document.getElementById('player-rank');
 
 function addMoney(amount) {
   money += amount;
   moneyAmount.textContent = '$' + money;
+  updateRank();
   showNotification('💰 +$' + amount + ' conseguido');
+}
+
+// ===== RANGO DE LEYENDA =====
+function updateRank() {
+  let rank = 'NOVATO';
+  if (money >= 1000) rank = 'LEYENDA';
+  else if (money >= 500) rank = 'VETERANO';
+  else if (money >= 200) rank = 'PISTOLERO';
+  playerRank.textContent = rank;
+  if (rank === 'LEYENDA') {
+    showNotification('🏆 ¡Has alcanzado el rango LEYENDA!', '🏆');
+  }
 }
 
 // ===== NOTIFICACIÓN ESTILO GTA =====
@@ -69,6 +83,21 @@ function showNotification(message, icon = '🔔') {
   notif.classList.remove('hidden');
   clearTimeout(notifTimer);
   notifTimer = setTimeout(() => notif.classList.add('hidden'), 3000);
+}
+
+// ===== CONFETI =====
+function launchConfetti() {
+  const colors = ['#feca57', '#ff6b6b', '#1dd1a1', '#48dbfb', '#ff9f43', '#ff6b9d'];
+  for (let i = 0; i < 60; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+    piece.style.animationDelay = (Math.random() * 0.5) + 's';
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), 5000);
+  }
 }
 
 // ===== SONIDOS =====
@@ -109,7 +138,7 @@ function playSelect() {
   } catch (e) {}
 }
 
-// ===== FANFARRIA DE MISIÓN PASADA (victoria épica) =====
+// ===== FANFARRIA DE MISIÓN PASADA =====
 function playMissionPassed() {
   try {
     const ctx = getAudio();
@@ -137,6 +166,7 @@ function showMissionComplete(message) {
   document.getElementById('mission-text').textContent = message;
   document.getElementById('mission-complete').classList.remove('hidden');
   playMissionPassed();
+  launchConfetti();
   addMoney(200);
 }
 
@@ -147,7 +177,7 @@ if (missionClose) {
   });
 }
 
-// ===== RADIO GTA (panel lateral) =====
+// ===== RADIO GTA =====
 let radioOn = false;
 let radioAudio = null;
 let radioTuneInterval = null;
@@ -156,7 +186,6 @@ const radioPower = document.getElementById('radio-power');
 const radioTune = document.getElementById('radio-tune');
 const radioDisplay = document.getElementById('radio-display');
 
-// PON AQUÍ TU ENLACE DE MP3 (cambia el texto entre comillas):
 const songUrl = '';
 
 radioPower.addEventListener('click', () => {
@@ -217,7 +246,7 @@ function stopRadioTune() {
   clearInterval(radioTuneInterval);
 }
 
-// ===== GIRAR PANTALLA (LANDSCAPE) =====
+// ===== GIRAR PANTALLA =====
 const rotateBtn = document.getElementById('rotate-btn');
 let isRotated = false;
 
@@ -235,14 +264,53 @@ rotateBtn.addEventListener('click', () => {
   }
 });
 
-// ===== MINI-MAPA ESTILO GTA =====
+// ===== PANTALLA DE PAUSA =====
+const pauseBtn = document.getElementById('pause-btn');
+const pauseOverlay = document.getElementById('pause-overlay');
+
+function showPause() {
+  pauseOverlay.classList.remove('hidden');
+}
+
+function hidePause() {
+  pauseOverlay.classList.add('hidden');
+}
+
+pauseBtn.addEventListener('click', () => {
+  playSelect();
+  showPause();
+});
+
+document.getElementById('pause-resume').addEventListener('click', () => {
+  playSelect();
+  hidePause();
+});
+
+document.getElementById('pause-restart').addEventListener('click', () => {
+  playSelect();
+  hidePause();
+  window.location.reload();
+});
+
+document.getElementById('pause-menu').addEventListener('click', () => {
+  playSelect();
+  hidePause();
+  document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+  document.getElementById('mapa-overlay').classList.add('hidden');
+  document.getElementById('video-player').classList.add('hidden');
+  document.getElementById('char-overlay').classList.add('hidden');
+  document.getElementById('main-menu').classList.remove('hidden');
+  stopRace();
+});
+
+// ===== MINI-MAPA =====
 document.getElementById('mini-map').addEventListener('click', () => {
   playSelect();
   document.getElementById('main-menu').classList.add('hidden');
   document.getElementById('mapa-overlay').classList.remove('hidden');
 });
 
-// ===== RUTAS DIBUJADAS ENTRE LUGARES =====
+// ===== RUTAS DIBUJADAS =====
 const routePoints = [
   { name: 'Budapest', x: 30, y: 20 },
   { name: 'Costa azul', x: 60, y: 35 },
@@ -256,17 +324,14 @@ function drawRoutes() {
   if (!svg) return;
   svg.innerHTML = '';
   const ns = 'http://www.w3.org/2000/svg';
-  // Conectar cada lugar con el siguiente (tipo GPS)
   for (let i = 0; i < routePoints.length - 1; i++) {
     const a = routePoints[i];
     const b = routePoints[i + 1];
     const path = document.createElementNS(ns, 'path');
-    // Curva suave entre los dos puntos
     const mx = (a.x + b.x) / 2;
     path.setAttribute('d', `M ${a.x} ${a.y} Q ${mx} ${a.y} ${b.x} ${b.y}`);
     svg.appendChild(path);
   }
-  // También conecta Marrufo de vuelta a Budapest (ruta circular)
   const a = routePoints[routePoints.length - 1];
   const b = routePoints[0];
   const path = document.createElementNS(ns, 'path');
@@ -275,15 +340,13 @@ function drawRoutes() {
   svg.appendChild(path);
 }
 
-// ===== MODO VISTA DE NOCHE (toggle) =====
-// Toca el mapa 2 veces rápido para activar/desactivar la noche
+// ===== MODO NOCHE =====
 const mapContainer = document.querySelector('.map-container');
 const mapNight = document.querySelector('.map-night');
 let lastTap = 0;
 
 if (mapContainer) {
   mapContainer.addEventListener('click', (e) => {
-    // Ignorar si tocó un punto del mapa
     if (e.target.classList.contains('map-point')) return;
     const now = Date.now();
     if (now - lastTap < 400) {
@@ -294,7 +357,7 @@ if (mapContainer) {
   });
 }
 
-// ===== MAPA: puntos y detalle de Game over =====
+// ===== MAPA: puntos =====
 const mapLabel = document.getElementById('map-label');
 
 document.querySelectorAll('.map-point').forEach(point => {
@@ -319,7 +382,7 @@ function showMapLabel(point) {
   mapLabel.classList.add('show');
 }
 
-// ===== Navegación del menú =====
+// ===== NAVEGACIÓN DEL MENÚ =====
 document.querySelectorAll('.menu-btn').forEach(btn => {
   btn.addEventListener('mouseenter', playHover);
   btn.addEventListener('click', () => {
@@ -332,7 +395,7 @@ document.querySelectorAll('.menu-btn').forEach(btn => {
   });
 });
 
-// Botones de volver (incluye cerrar mapa, video y personaje)
+// Botones de volver
 document.querySelectorAll('.back-btn').forEach(btn => {
   btn.addEventListener('mouseenter', playHover);
   btn.addEventListener('click', () => {
@@ -371,6 +434,11 @@ document.querySelectorAll('.char-card').forEach(card => {
     document.getElementById('char-photo-img').src = data.photo;
     document.getElementById('char-personality').textContent = 'Personalidad: ' + data.personality;
     document.getElementById('char-physical').textContent = 'Físico: ' + data.physical;
+    // Animar barras de estadísticas
+    document.querySelectorAll('.stat-fill').forEach(fill => {
+      const val = fill.getAttribute('data-val');
+      setTimeout(() => { fill.style.width = val + '%'; }, 300);
+    });
     document.getElementById('char-overlay').classList.remove('hidden');
   });
 });
@@ -379,7 +447,7 @@ document.getElementById('close-char').addEventListener('click', () => {
   document.getElementById('char-overlay').classList.add('hidden');
 });
 
-// ===== GALERÍA: reproducir video =====
+// ===== GALERÍA =====
 document.querySelectorAll('.gallery-item.video').forEach(item => {
   item.addEventListener('click', () => {
     playSelect();
@@ -397,7 +465,7 @@ document.getElementById('close-video').addEventListener('click', () => {
   document.getElementById('video-player').classList.add('hidden');
 });
 
-// ===== MISIONES: completar al tocar =====
+// ===== MISIONES =====
 document.querySelectorAll('.mission-item').forEach(item => {
   item.addEventListener('click', () => {
     if (item.classList.contains('locked')) return;

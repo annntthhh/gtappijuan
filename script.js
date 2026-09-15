@@ -18,6 +18,8 @@ function showMenu() {
   document.getElementById('loading-screen').classList.add('hidden');
   document.getElementById('main-menu').classList.remove('hidden');
   document.getElementById('money-counter').classList.remove('hidden');
+  document.getElementById('mini-map').classList.remove('hidden');
+  document.getElementById('radio-panel').classList.remove('hidden');
   showNotification('🎮 Bienvenido a Los Santos', '💛');
 }
 
@@ -101,44 +103,53 @@ function playSelect() {
   } catch (e) {}
 }
 
-// ===== RADIO GTA =====
+// ===== RADIO GTA (panel lateral) =====
 let radioOn = false;
 let radioAudio = null;
+let radioTuneInterval = null;
 
-document.getElementById('radio-btn').addEventListener('click', () => {
+const radioPower = document.getElementById('radio-power');
+const radioTune = document.getElementById('radio-tune');
+const radioDisplay = document.getElementById('radio-display');
+
+// PON AQUÍ TU ENLACE DE MP3 (cambia el texto entre comillas):
+const songUrl = '';
+
+radioPower.addEventListener('click', () => {
   playSelect();
   radioOn = !radioOn;
-  const btn = document.getElementById('radio-btn');
-
   if (radioOn) {
-    btn.classList.add('on');
-    btn.textContent = '📻 RADIO GTA: ON';
+    radioPower.classList.add('on');
+    radioDisplay.textContent = 'RADIO ON';
     showNotification('📻 Radio GTA encendida', '🎵');
-
-    // PON AQUÍ TU ENLACE DE MP3 (cambia el texto entre comillas):
-    const songUrl = '';
-
     if (songUrl) {
       radioAudio = new Audio(songUrl);
       radioAudio.loop = true;
       radioAudio.volume = 0.6;
       radioAudio.play();
     } else {
-      // Si no hay canción, suena una melodía generada tipo radio
       playRadioTune();
     }
   } else {
-    btn.classList.remove('on');
-    btn.textContent = '📻 RADIO GTA';
+    radioPower.classList.remove('on');
+    radioDisplay.textContent = 'RADIO GTA';
     showNotification('📻 Radio GTA apagada', '🔇');
     if (radioAudio) { radioAudio.pause(); radioAudio = null; }
     stopRadioTune();
   }
 });
 
-// Melodía generada tipo radio (suena si no hay MP3)
-let radioTuneInterval = null;
+radioTune.addEventListener('click', () => {
+  playSelect();
+  if (radioOn) {
+    showNotification('📻 Sintonizando...', '🎛️');
+    // Cambia de "canal": suena una melodía distinta
+    stopRadioTune();
+    playRadioTune();
+  }
+});
 
+// Melodía generada tipo radio (suena si no hay MP3)
 function playRadioTune() {
   const notes = [440, 493, 523, 587, 659, 698, 784, 880];
   let n = 0;
@@ -164,7 +175,32 @@ function stopRadioTune() {
   clearInterval(radioTuneInterval);
 }
 
-// Navegación del menú
+// ===== GIRAR PANTALLA (LANDSCAPE) =====
+const rotateBtn = document.getElementById('rotate-btn');
+let isRotated = false;
+
+rotateBtn.addEventListener('click', () => {
+  playSelect();
+  isRotated = !isRotated;
+  if (isRotated) {
+    document.documentElement.classList.add('landscape');
+    rotateBtn.textContent = '📱 VERTICAL';
+    showNotification('🔄 Pantalla girada', '📱');
+  } else {
+    document.documentElement.classList.remove('landscape');
+    rotateBtn.textContent = '🔄 GIRAR';
+    showNotification('📱 Modo vertical', '📱');
+  }
+});
+
+// ===== MINI-MAPA ESTILO GTA =====
+document.getElementById('mini-map').addEventListener('click', () => {
+  playSelect();
+  document.getElementById('main-menu').classList.add('hidden');
+  document.getElementById('mapa-overlay').classList.remove('hidden');
+});
+
+// ===== Navegación del menú =====
 document.querySelectorAll('.menu-btn').forEach(btn => {
   btn.addEventListener('mouseenter', playHover);
   btn.addEventListener('click', () => {
@@ -221,12 +257,6 @@ document.querySelectorAll('.char-card').forEach(card => {
 });
 
 // ===== MAPA =====
-document.getElementById('open-map').addEventListener('click', () => {
-  playSelect();
-  document.getElementById('main-menu').classList.add('hidden');
-  document.getElementById('mapa-overlay').classList.remove('hidden');
-});
-
 // Puntos del mapa: mostrar nombre
 document.querySelectorAll('.map-point').forEach(point => {
   point.addEventListener('mouseenter', () => {

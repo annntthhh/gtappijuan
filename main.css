@@ -134,7 +134,7 @@ html.landscape body {
 /* ===== NOTIFICACIÓN ===== */
 #gta-notification {
   position: fixed;
-  top: 15px;
+  bottom: 15px;
   right: 15px;
   background: rgba(0,0,0,0.9);
   border: 2px solid #feca57;
@@ -146,12 +146,12 @@ html.landscape body {
   z-index: 60;
   font-size: 15px;
   box-shadow: 0 0 20px rgba(254,202,87,0.4);
-  animation: notifIn 0.3s ease;
+  animation: notifUp 0.3s ease;
 }
 
-@keyframes notifIn {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+@keyframes notifUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 #notif-icon {
@@ -319,9 +319,8 @@ html.landscape body {
 /* ===== RADIO GTA ===== */
 #radio-panel {
   position: fixed;
-  top: 50%;
+  top: 15px;
   right: 15px;
-  transform: translateY(-50%);
   z-index: 40;
 }
 

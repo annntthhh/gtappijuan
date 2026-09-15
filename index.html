@@ -33,6 +33,17 @@
     <span id="notif-text">Mensaje</span>
   </div>
 
+  <!-- MINI-MAPA ESTILO GTA (abajo a la derecha) -->
+  <div id="mini-map" class="hidden">
+    <div class="mini-map-inner">
+      <div class="mini-point" style="top:20%; left:30%;" data-name="Budapest"></div>
+      <div class="mini-point" style="top:35%; left:60%;" data-name="Costa azul (Game over)"></div>
+      <div class="mini-point" style="top:50%; left:25%;" data-name="Mi casa"></div>
+      <div class="mini-point" style="top:65%; left:55%;" data-name="Super 900"></div>
+      <div class="mini-point" style="top:80%; left:40%;" data-name="Marrufo (hace unos meses)"></div>
+    </div>
+  </div>
+
   <div id="main-menu" class="hidden">
     <div class="menu-bg"></div>
     <div class="menu-content">
@@ -47,9 +58,21 @@
         <button class="menu-btn" data-target="galeria"><span>GALERÍA</span></button>
         <button class="menu-btn" data-target="carreras"><span>🏁 CARRERAS</span></button>
       </nav>
-      <button class="map-btn" id="open-map">🗺️ MAPA</button>
-      <button class="radio-btn" id="radio-btn">📻 RADIO GTA</button>
+      <button class="rotate-btn" id="rotate-btn">🔄 GIRAR</button>
       <p class="footer-note">© 2026 Juan Edition · Hecho con amor por Ani</p>
+    </div>
+  </div>
+
+  <!-- RADIO GTA (panel lateral derecho) -->
+  <div id="radio-panel" class="hidden">
+    <div class="radio-box">
+      <div class="radio-screen">
+        <span id="radio-display">RADIO GTA</span>
+      </div>
+      <div class="radio-controls">
+        <button id="radio-power">⏻</button>
+        <button id="radio-tune">📻</button>
+      </div>
     </div>
   </div>
 
